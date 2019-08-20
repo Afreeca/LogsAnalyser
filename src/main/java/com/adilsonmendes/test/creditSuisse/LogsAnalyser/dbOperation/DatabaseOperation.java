@@ -10,7 +10,7 @@ public class DatabaseOperation {
 	private static Logger LOG = LogManager.getLogger(DatabaseOperation.class);
 	
 	private Connection connection = null;
-	private final String host = "jdbc:hsqldb:file:database-data/mydatabase";
+	private final String host = "jdbc:hsqldb:file:database-data/logdb;shutdown=true";
 	private final String username = "SA";
 	private final String password = "";
 	

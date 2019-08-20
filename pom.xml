@@ -56,6 +56,13 @@
       <artifactId>log4j-core</artifactId>
       <version>2.12.1</version>
     </dependency>
-
+    
+    <!-- Library to serialize and deserialize Java objects to JSON -->
+	<dependency>
+	    <groupId>com.googlecode.json-simple</groupId>
+	    <artifactId>json-simple</artifactId>
+	    <version>1.1</version>
+	</dependency>
+    
   </dependencies>
 </project>
