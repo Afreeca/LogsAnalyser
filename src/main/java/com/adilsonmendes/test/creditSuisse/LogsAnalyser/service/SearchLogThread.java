@@ -15,19 +15,19 @@ import com.adilsonmendes.test.creditSuisse.LogsAnalyser.model.Log;
 import com.adilsonmendes.test.creditSuisse.LogsAnalyser.utils.Helper;
 
 public class SearchLogThread extends Thread{
-	
+
 	Event eventStart;
 	String path;
-	
+
 	static DatabaseOperation con = DatabaseOperation.create();
-	
+
 	public SearchLogThread(Event eventStart, String path) {
 		this.eventStart = eventStart;
 		this.path = path;
 	}
-	
+
 	@Override
-	public void run() {		
+	public void run() {
 		LineIterator it = null;
 		try {
 			it = FileUtils.lineIterator(new File(path), "UTF-8");
@@ -64,5 +64,5 @@ public class SearchLogThread extends Thread{
 	
 	private static void storeLog(Event event, long duration, boolean alertStatus) throws SQLException {
 		con.insertLog(new Log(event.getId(), duration, event.getType(), event.getHost(), alertStatus));
-	}	
+	}
 }

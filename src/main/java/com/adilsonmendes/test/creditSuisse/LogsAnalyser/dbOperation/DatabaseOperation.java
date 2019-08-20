@@ -8,12 +8,13 @@ import java.sql.Statement;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hsqldb.Database;
 
 import com.adilsonmendes.test.creditSuisse.LogsAnalyser.model.Log;
 
 public class DatabaseOperation {
 	private static Logger LOG = LogManager.getLogger(DatabaseOperation.class);
-	
+
 	private static DatabaseOperation db = null;
 	private Connection con = null;
 	private Statement stmt = null;
@@ -26,9 +27,9 @@ public class DatabaseOperation {
 		OpenConnection();
 		ConnectToDB();
 	}
-	
+
 	private void OpenConnection()
-	{	
+	{
 		try {
 			Class.forName("org.hsqldb.jdbc.JDBCDriver");
 			LOG.debug("instantiate com.mysql.jdbc.Driver: DB connection open");
