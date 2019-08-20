@@ -12,9 +12,8 @@ public class LogService {
 
 	private static Logger LOG = LogManager.getLogger(LogService.class.getName());
 
-	public static void createLogTable(DatabaseOperation dbOperation, String script) {
+	public static void createLogTable(Connection con, String script) {
 		try {
-			Connection con = dbOperation.getConnection();
 			con.createStatement().executeUpdate(script);
 			LOG.info("logEvent table created");
 		}catch (Exception e) {
@@ -23,8 +22,8 @@ public class LogService {
 		}
 	}
 
-	public static void createLog(DatabaseOperation dbOperation, Log log){
-		Connection con = dbOperation.getConnection();
+	public static void createLog(Log log) throws SQLException{
+		Connection con = DatabaseOperation.getInstance().getConnection();
 		
 		try{
 			PreparedStatement statement = null;
@@ -46,7 +45,7 @@ public class LogService {
 		{
 			LOG.error(e);
 		} finally {
-			dbOperation.closeConnection();
+			
 		}
 	};
 }

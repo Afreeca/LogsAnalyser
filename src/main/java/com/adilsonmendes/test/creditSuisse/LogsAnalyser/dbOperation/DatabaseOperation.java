@@ -2,23 +2,27 @@ package com.adilsonmendes.test.creditSuisse.LogsAnalyser.dbOperation;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hsqldb.Database;
 
 public class DatabaseOperation {
 	private static Logger LOG = LogManager.getLogger(DatabaseOperation.class);
 	
-	private Connection connection = null;
-	private final String host = "jdbc:hsqldb:file:database-data/logdb;shutdown=true";
-	private final String username = "SA";
-	private final String password = "";
+	private Connection connection;
+	private static DatabaseOperation dbIsntance;
 	
-	public DatabaseOperation(){};
 	
-	public Connection getConnection() {
-		return connection;
-	}
+	private DatabaseOperation(){};
+	
+	 public static DatabaseOperation getInstance(){
+	    if(dbIsntance==null){
+	        dbIsntance= new DatabaseOperation();
+	    }
+	    return dbIsntance;
+	 }
 	
 	public void OpenConnection()
 	{	
@@ -32,24 +36,30 @@ public class DatabaseOperation {
 		}
 	}
 
-	public void ConnectToDB()
-	{
-		try {
-			connection = (DriverManager.getConnection(host, username, password));
-			LOG.debug("Connected to host: " + host);
-		}catch (Exception e) {
-			LOG.error(String.format("Failed to connect to the  host s%", host));
-			LOG.debug(e);
-		}
-	}
 	
-	public void closeConnection() {
+	public void closeConnection(Connection con) {
 		try {
-			connection.close();
+			con.close();
 			LOG.debug("DB connection Close");
 		} catch (Exception e) {
 			LOG.error("Failed to close the connection to the host: ");
 			LOG.debug(e);
 		}
 	}
+	
+	public  Connection getConnection() throws SQLException{
+
+		if(connection==null || connection.isClosed()){
+            try {
+            	 final String host = "jdbc:hsqldb:file:database-data/logdb;shutdown=true";
+            	 final String username = "SA";
+            	 final String password = "";
+            	connection = DriverManager.getConnection( host, username, password );
+            } catch (SQLException ex) {
+
+            }
+        }
+
+        return connection;
+    }
 }

@@ -2,7 +2,7 @@ package com.adilsonmendes.test.creditSuisse.LogsAnalyser.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.sql.SQLException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
@@ -10,6 +10,7 @@ import org.json.simple.parser.ParseException;
 
 import com.adilsonmendes.test.creditSuisse.LogsAnalyser.model.Event;
 import com.adilsonmendes.test.creditSuisse.LogsAnalyser.model.Event.Status;
+import com.adilsonmendes.test.creditSuisse.LogsAnalyser.model.Log;
 import com.adilsonmendes.test.creditSuisse.LogsAnalyser.utils.Helper;
 
 public class SearchLogThread extends Thread{
@@ -36,12 +37,17 @@ public class SearchLogThread extends Thread{
 
 		        	
 		        if(eventStart.getId().equalsIgnoreCase(ev.getId()) && Status.valueOf(ev.getState().toString()) == Status.FINISHED){
-		        	boolean test = validateLog(eventStart.getTimestamp(), ev.getTimestamp());
-		        	if(test)
-		        		System.out.println("viva caralho: " + ev.getId());
+		        	boolean alertStatus = false;
+		        	long duration = Helper.getTimestampDifference(eventStart.getTimestamp(), ev.getTimestamp());
+		        	if(duration > 4)
+		        		alertStatus = true;
+		        	storeLog(eventStart, duration, alertStatus);
 		        }
 		    }
 		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 		    try {
@@ -52,8 +58,8 @@ public class SearchLogThread extends Thread{
 		}
 	}
 	
-	private static boolean validateLog(Timestamp started, Timestamp finished) {
-    	return Helper.getTimestampDifference(started, finished) > 4;
+	private static void storeLog(Event event, long duration, boolean alertStatus) throws SQLException {
+//		LogService.createLog(new Log(event.getId(), duration, event.getType(), event.getHost(), alertStatus));
 	}
 	
 }
