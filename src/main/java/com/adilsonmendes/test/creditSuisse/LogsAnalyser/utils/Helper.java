@@ -40,14 +40,18 @@ public class Helper {
 		Event event = new Event();
 		
 		
-		if (jObj.get("id") != null)
+		if (jObj.get("id").toString() != null)
 			event.setId(jObj.get("id").toString());
 		if (jObj.get("state")!= null)
 			event.setState(Status.valueOf(jObj.get("state").toString()) == Status.STARTED ? Status.STARTED : Status.FINISHED);
+		if (jObj.get("host") != null)
+			event.setHost(jObj.get("host").toString());
 		if (jObj.get("type") != null)
 			event.setType(jObj.get("type").toString());
 		if (jObj.get("timestamp") != null)
 			event.setTimestamp(new Timestamp(Long.parseLong(jObj.get("timestamp").toString())));
+		
+
 		return event;
 		
 	}
