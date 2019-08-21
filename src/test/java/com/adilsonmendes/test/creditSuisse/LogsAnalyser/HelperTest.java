@@ -1,19 +1,21 @@
-package com.adilsonmendes.test.creditSuisse.LogsAnalyser.utils;
+package com.adilsonmendes.test.creditSuisse.LogsAnalyser;
 
-import com.adilsonmendes.test.creditSuisse.LogsAnalyser.model.Event;
-import com.adilsonmendes.test.creditSuisse.LogsAnalyser.model.Event.Status;
-
-import org.json.simple.parser.ParseException;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.Timestamp;
 
-public class HelperTest {
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
-    @Test
+import com.adilsonmendes.test.creditSuisse.LogsAnalyser.model.Event;
+import com.adilsonmendes.test.creditSuisse.LogsAnalyser.model.Event.Status;
+import com.adilsonmendes.test.creditSuisse.LogsAnalyser.utils.Helper;
+
+@RunWith(MockitoJUnitRunner.class)
+public class HelperTest {
+	
+	@Test
     public void testConvertStringJson() throws Exception {
         // Setup
         final String jsonStr = "{\"id\":\"scsmbstgra\", \"state\":\"STARTED\", \"type\":\"APPLICATION_LOG\", \"host\":\"12345\", \"timestamp\":1491377495212}";
