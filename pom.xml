@@ -78,6 +78,13 @@
                 <target>1.8</target>
             </configuration>
         </plugin>
+        <plugin>
+        	<groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <configuration>
+             <mainClass>com.adilsonmendes.test.creditSuisse.LogsAnalyser.LogsAnalyser</mainClass>
+        </configuration>
+        </plugin>
     </plugins>
 </build>
 </project>
